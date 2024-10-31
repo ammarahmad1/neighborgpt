@@ -152,7 +152,7 @@ const ChatInterface = () => {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',  // 10% black overlay
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',  // 10% black overlay
           }}
         />
       </div>
