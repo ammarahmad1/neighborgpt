@@ -132,20 +132,26 @@ const ChatInterface = () => {
       <div className="flex-1 flex flex-col items-center relative z-10">
         {/* Header Section */}
         <div className="text-center mt-16 sm:mt-20 mb-8 px-4">
+        <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto rounded-full">
           <video
             src={pfpvideo}
             autoPlay
             loop
             muted
-            className="mx-auto rounded-full mb-4 shadow-lg w-full max-w-xs sm:max-w-md"
+            playsInline
+            webkit-playsinline="true"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-100px h-200px object-cover"
           />
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-            NeighborGPT
-          </h1>
-          <p className="text-gray-300 text-base sm:text-lg">
-            Ask me anything... I am your $Neighbor after all
-          </p>
         </div>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+          NeighborGPT
+        </h1>
+        <p className="text-gray-300 text-base sm:text-lg">
+          Ask me anything... I am your $Neighbor after all
+        </p>
+      </div>
+
+
 
         {/* Chat Messages Area */}
         <div className="flex-1 w-full max-w-4xl p-4 mb-24 overflow-y-auto">
@@ -175,14 +181,14 @@ const ChatInterface = () => {
                   </span>
                 </div>
               )}
-              <div
-                className={`p-4 rounded-lg shadow-lg text-white bg-black bg-opacity-50 max-w-full sm:max-w-md ${
-                  message.role === 'user' ? 'ml-auto' : 'mr-auto'
-                }`}
-                style={{ opacity: 0.9 }}
-              >
-                {message.content}
-              </div>
+             <div
+              className={`p-4 rounded-lg shadow-lg text-white bg-black bg-opacity-80 max-w-full sm:max-w-md ${
+                message.role === 'user' ? 'ml-auto' : 'mr-auto'
+              }`}
+              style={{ opacity: 0.9 }} // You can remove this line if opacity is handled by bg-opacity class
+            >
+              {message.content}
+            </div>
             </div>
           ))}
           {isLoading && (
