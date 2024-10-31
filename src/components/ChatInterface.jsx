@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import backgroundimage from '../images/bg.jpg';
 import pfp from '../images/pfp.jpg';  // Neighbor's profile picture.
+import pfpuser from '../images/pfp-user.png';  // User's profile picture.
 import pfpvideo from '../images/pfpvideo.MP4';
 
 const ChatInterface = () => {
@@ -12,7 +13,6 @@ const ChatInterface = () => {
   const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
   const isApiKeyValid = OPENAI_API_KEY && OPENAI_API_KEY.startsWith('sk-');
 
-  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -20,6 +20,7 @@ const ChatInterface = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,15 +115,15 @@ const ChatInterface = () => {
             backgroundPosition: 'center',
             position: 'absolute',
             inset: 0,
-            opacity: 0.6
+            opacity: 9,
           }}
         />
-        {/* Black Overlay */}
+        {/* Black Overlay with 10% opacity */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.15)'  // Black overlay with reduced opacity
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',  // 10% black overlay
           }}
         />
       </div>
@@ -136,7 +137,7 @@ const ChatInterface = () => {
             autoPlay
             loop
             muted
-            className="mx-auto width:100% height:150px rounded-full mb-4 shadow-lg w-full max-w-xs sm:max-w-md"
+            className="mx-auto rounded-full mb-4 shadow-lg w-full max-w-xs sm:max-w-md"
           />
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
             NeighborGPT
@@ -148,7 +149,6 @@ const ChatInterface = () => {
 
         {/* Chat Messages Area */}
         <div className="flex-1 w-full max-w-4xl p-4 mb-24 overflow-y-auto">
-          
           {messages.map((message, index) => (
             <div className="mb-4" key={index}>
               {/* Display neighbor on left with PFP, user on right with no PFP */}
@@ -165,6 +165,11 @@ const ChatInterface = () => {
                 </div>
               ) : (
                 <div className="flex justify-end items-center mb-1">
+                  <img
+                    src={pfpuser} // User's profile picture
+                    alt="User Profile"
+                    className="w-8 h-8 rounded-full mr-2"
+                  />
                   <span className="text-white font-semibold">
                     You
                   </span>
