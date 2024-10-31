@@ -4,6 +4,8 @@ import pfp from '../images/pfp.jpg';  // Neighbor's profile picture.
 import pfpuser from '../images/pfp-user.png';  // User's profile picture.
 import pfpvideo from '../images/pfpvideo.MP4';
 
+
+
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -21,6 +23,33 @@ const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    
+    const handleCanPlay = () => {
+      const playPromise = videoElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // Video started playing successfully
+        }).catch(error => {
+          console.error('Autoplay was prevented:', error);
+        });
+      }
+    };
+
+    if (videoElement) {
+      videoElement.addEventListener('canplay', handleCanPlay);
+      
+      return () => {
+        videoElement.removeEventListener('canplay', handleCanPlay);
+      };
+    }
+  }, []);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,7 +144,7 @@ const ChatInterface = () => {
             backgroundPosition: 'center',
             position: 'absolute',
             inset: 0,
-            opacity: 9,
+            opacity: 0.9,
           }}
         />
         {/* Black Overlay with 10% opacity */}
@@ -123,7 +152,7 @@ const ChatInterface = () => {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',  // 10% black overlay
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',  // 10% black overlay
           }}
         />
       </div>
@@ -134,6 +163,7 @@ const ChatInterface = () => {
         <div className="text-center mt-16 sm:mt-20 mb-8 px-4">
         <div className="relative w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto rounded-full">
           <video
+            ref={videoRef}
             src={pfpvideo}
             autoPlay
             loop
